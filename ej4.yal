@@ -1,0 +1,16 @@
+(* La sección {header} es opcional *)
+
+(* Definiendo números hexadecimales *)
+
+(* Definiendo las letras *)
+let letter = ['a'-'z' 'A'-'Z']
+
+(* Definiendo los números *)
+let digit = ['0'-'9']
+
+(* Definiendo los signos *)
+
+let sign = ['+'|'-']
+
+(* Definiendo los números *)
+let hexdigit = [sign]?digits('E'[sign]?digits)?

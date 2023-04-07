@@ -179,69 +179,6 @@ with open("exp3.yal", "r") as file:
         listaA.append(tabla[key])
     
     #print("Lista: ", lista)
-
-    # # Sacando cada regex para analizarla.
-    # for regex in listaA:
-    #     #print("Regex: ", regex)
-    #     # Cambiando el ? por un |ε.
-    #     regex = regex.replace("?", "|ε")
-
-    #     # Simplificando los *.
-    #     if "*" in regex:
-    #         regex = regex.replace("*****************", "*")
-    #         regex = regex.replace("****************", "*")
-    #         regex = regex.replace("***************", "*")
-    #         regex = regex.replace("**************", "*")
-    #         regex = regex.replace("************", "*")
-    #         regex = regex.replace("**********", "*")
-    #         regex = regex.replace("********", "*")
-    #         regex = regex.replace("******", "*")
-    #         regex = regex.replace("*****", "*")
-    #         regex = regex.replace("****", "*")
-    #         regex = regex.replace("***", "*")
-    #         regex = regex.replace("**", "*")
-
-    #     #print("Regex: ", regex)
-
-    #     # Quitando las comillas de los caracteres.
-    #     regex = regex.replace("'", "")
-
-    #     # # Haciendo el grafo.
-    #     # grafo(automata, lista, diccionario)
-
-    #     # Pasando a postfix.
-    #     reg = evaluar(regex)
-
-    #     #print("Regex: ", regex)
-
-    #     listaF.append(reg)
-
-    # #print("ListaF: ", listaF)
-
-    # # Definiendo las listas para mandarlas a la unión de los AFNs.
-    # automatasAFN = []
-    # listasAFN = []
-    # diccionariosAFN = []
-
-    # # Por cada autómata de la listaF hacer un AFN.
-    # for res in listaF:
-    #     #print("Regex: ", res)
-
-    #     # # Creando el AFN.
-    #     automata, lista, diccionario = thompson(res)
-
-    #     automatasAFN.append(automata)
-    #     listasAFN.append(lista)
-    #     diccionariosAFN.append(diccionario)
-
-    
-    # Uniendo los AFNs.
-    #union_AFNs(automatasAFN, listasAFN, diccionariosAFN)
-
-    #print("ListaA: ", listaA)
-
-    # print("ListaF: ", listaF)
-
     regex_final = ""
     alf_final = ""
     lista_temp = []
@@ -312,3 +249,5 @@ with open("exp3.yal", "r") as file:
     
     else: 
         print("Hubo un error con la regex")
+
+# Probando compilar un archivo yalex.
