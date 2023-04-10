@@ -40,6 +40,7 @@ def format_regex(regex):
     if "+" in res:
         res = res.replace("+", "")
         res = res + "." + res + "*"
+        #print("Res: ", res)
     return res
 
 

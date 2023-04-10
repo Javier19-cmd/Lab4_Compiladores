@@ -536,9 +536,9 @@ class SintaxT:
         # for estado in self.estadosAFD:
         #     print("Estados en el método de gráfica: ", estado)
 
-        # # Imprimiendo los estados y sus tansiciones.
-        # for estado in self.estadosAFD:
-        #     print("Estado: ", estado, "Transiciones: ", estado.transitions)
+        # Imprimiendo los estados y sus tansiciones.
+        for estado in self.estadosAFD:
+            print("Estado: ", estado, "Transiciones: ", estado.transitions)
         
         # For indicado.
         for estado in self.estadosAFD:

@@ -9,7 +9,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("exp3.yal", "r") as file:
+with open("exp1.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -133,7 +133,7 @@ with open("exp3.yal", "r") as file:
     # Verificando si hay una definición de number.
     if 'number' in tabla:
         new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
-        new_signs = "@|~"
+        new_signs = "(@|~)"
         """
             El reemplazo sería:
             digits se cambia por new_digitsp.
@@ -143,7 +143,7 @@ with open("exp3.yal", "r") as file:
         tabla['number'] = tabla['number'].replace("sign", new_signs)
     
     if 'sign' in tabla: 
-        new_signs = "@|~"
+        new_signs = "(@|~)"
         tabla['sign'] = tabla['sign'].replace("['+'|'-']", new_signs)
 
     
@@ -152,15 +152,17 @@ with open("exp3.yal", "r") as file:
 
         #print("Hay un delim")
 
-        new_delims = "≡|¥|§"
+        new_delims = "(≡|¥|§)"
         tabla['delim'] = tabla['delim'].replace("[' ''\\t''\\n']", new_delims)
     
     if 'ws' in tabla: 
-        new_delims = "≡|¥|§"
-        tabla['ws'] = tabla['ws'].replace("delim", new_delims)
+        new_delimsp = "(≡|¥|§)(≡|¥|§)*"
+        tabla['ws'] = tabla['ws'].replace("delim+", new_delimsp)
 
         # Verificando como está el delim.
         # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
+        # Verificando si se hizo el cambio.
+        print("Tabla: ", tabla)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
@@ -219,18 +221,20 @@ with open("exp3.yal", "r") as file:
             #print("RegexI: ", regexI)
 
             # Creando el AFD temporal.
-            SintaxT(regexI, alfI)
+            #SintaxT(regexI, alfI)
         
         else: 
             print("Hubo un error con la regex")
 
 
-    #print("ListaA: ", listaA)
+    print("ListaA: ", listaA)
 
     # Uniendo todas las expresiones mediante un |.
     expr = "|".join(listaA)
 
-    #print("Expresión unida: ", expr)
+    print("Expresión unida: ", expr)
+
+    reg = evaluar(expr)
 
     # Verificando que la expresión regular no tenga errores.
     bien = deteccion(expr)
