@@ -40,7 +40,7 @@ def format_regex(regex):
     if "+" in res:
         res = res.replace("+", "")
         res = res + "." + res + "*"
-        #print("Res: ", res)
+        print("Res: ", res)
     return res
 
 
@@ -75,5 +75,4 @@ def evaluar(regex):
 
     while len(stack) > 0:
         postfix += stack.pop()
-
     return postfix

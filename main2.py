@@ -9,7 +9,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("exp1.yal", "r", encoding='utf-8') as file:
+with open("ej1.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -105,7 +105,7 @@ with open("exp1.yal", "r", encoding='utf-8') as file:
     
     # Verificando si hay una definición de digit+
     if 'digits' in tabla:
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         tabla['digits'] = tabla['digits'].replace("digit+", new_digitsp)
     
     #print("Tabla: ", tabla)
@@ -113,9 +113,9 @@ with open("exp1.yal", "r", encoding='utf-8') as file:
     # Verificando si hay una definición id.
     if 'id' in tabla:
         new_letters = '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)'
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         """
-            El reemplazo sería: 
+            El reemplazo sería:
             id = letter (letter | digit)*
             en donde letter se cambia por new1_letters 
             y digits por new1_digitsp
@@ -162,7 +162,7 @@ with open("exp1.yal", "r", encoding='utf-8') as file:
         # Verificando como está el delim.
         # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
         # Verificando si se hizo el cambio.
-        print("Tabla: ", tabla)
+        #print("Tabla: ", tabla)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
