@@ -9,7 +9,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej1.yal", "r", encoding='utf-8') as file:
+with open("ej3.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -132,7 +132,7 @@ with open("ej1.yal", "r", encoding='utf-8') as file:
 
     # Verificando si hay una definición de number.
     if 'number' in tabla:
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         new_signs = "(@|~)"
         """
             El reemplazo sería:

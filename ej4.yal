@@ -13,4 +13,4 @@ let digit = ['0'-'9']
 let sign = ['+'|'-']
 
 (* Definiendo los números *)
-let hexdigit = [sign]?digits('E'[sign]?digits)?
+let hexdigit = letter(digits('E'[sign]?digits)?)
