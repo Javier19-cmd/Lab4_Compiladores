@@ -22,6 +22,7 @@ class SintaxT:
         self.estadosAFD_dict = [] # Diccionario para graficar.
         self.terminal = None
         self.DTtrans = {}
+        self.dict = {} #Diccionario.
 
         self.aumento() # Se le agrega un # al final de la expresión regular.
         #print("La expresion regular es: ", self.regex)
@@ -525,10 +526,7 @@ class SintaxT:
             
         else: 
             print("Cadena rechazada por el AFD directo.")
-                
-
-
-    
+                    
     def grafica(self): #Método para graficar.
         grafo = gv.Digraph(comment="AFD", format="png")
         grafo.node('title', 'AFD', shape='none')
@@ -536,9 +534,9 @@ class SintaxT:
         # for estado in self.estadosAFD:
         #     print("Estados en el método de gráfica: ", estado)
 
-        # Imprimiendo los estados y sus tansiciones.
-        for estado in self.estadosAFD:
-            print("Estado: ", estado, "Transiciones: ", estado.transitions)
+        # # Imprimiendo los estados y sus tansiciones.
+        # for estado in self.estadosAFD:
+        #     print("Estado: ", estado, "Transiciones: ", estado.transitions)
         
         # For indicado.
         for estado in self.estadosAFD:
@@ -583,8 +581,15 @@ class SintaxT:
         # Colocando el autómta de manera horizontal.
         #grafo.graph_attr['rankdir'] = 'LR'
 
-        grafo.render('AFD_Directo', view=True) # Dibujando el grafo.        
-        
+        grafo.render('AFD_Directo', view=True) # Dibujando el grafo.
+
+        # Guardando las transiciones en un diccionario.
+        diccionario = {}
+
+        for estado in self.estadosAFD:
+            self.dict[estado] = estado.transitions
+
+        #print("Diccionario: ", diccionario)
 
     # Haciendo la minimización.
     def minimizar(self):

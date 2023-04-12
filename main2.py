@@ -9,7 +9,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej3.yal", "r", encoding='utf-8') as file:
+with open("ej2.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -184,6 +184,9 @@ with open("ej3.yal", "r", encoding='utf-8') as file:
     regex_final = ""
     alf_final = ""
     lista_temp = []
+    lista_diccionarios = [] # Este va a tener los diccionarios de cada AFD.
+    lista_iniciales = [] # Este va a tener los estados iniciales de cada AFD.
+    lista_finales = [] # Este va a tener los estados finales de cada AFD.
 
 
     for i in range(len(listaA)):
@@ -221,37 +224,51 @@ with open("ej3.yal", "r", encoding='utf-8') as file:
             #print("RegexI: ", regexI)
 
             # Creando el AFD temporal.
-            #SintaxT(regexI, alfI)
-        
+            arbol = SintaxT(regexI, alfI)
+
+            # Guardando los datos de cada AFD.
+
+            lista_diccionarios.append(arbol.dict) 
+
+            lista_iniciales.append([arbol.EstadoInicial])
+
+            lista_finales.append(arbol.EstadosAceptAFD)
+
         else: 
             print("Hubo un error con la regex")
 
 
-    print("ListaA: ", listaA)
+    # #print("ListaA: ", listaA)
 
-    # Uniendo todas las expresiones mediante un |.
-    expr = "|".join(listaA)
+    # # Uniendo todas las expresiones mediante un |.
+    # expr = "|".join(listaA)
 
-    print("Expresión unida: ", expr)
+    # print("Expresión unida: ", expr)
 
-    reg = evaluar(expr)
+    # reg = evaluar(expr)
 
-    # Verificando que la expresión regular no tenga errores.
-    bien = deteccion(expr)
+    # # Verificando que la expresión regular no tenga errores.
+    # bien = deteccion(expr)
 
-    if bien:
+    # if bien:
     
-        # Pasando a postfix.
-        regex_final = evaluar(expr)
+    #     # Pasando a postfix.
+    #     regex_final = evaluar(expr)
 
-        #print("Expresión unida en postfix: ", regex_final)
+    #     #print("Expresión unida en postfix: ", regex_final)
 
-        # Obteniendo alfabeto.
-        alf_final = alfabeto(regex_final)
+    #     # Obteniendo alfabeto.
+    #     alf_final = alfabeto(regex_final)
 
-        SintaxT(regex_final, alf_final)
+    #     SintaxT(regex_final, alf_final)
     
-    else: 
-        print("Hubo un error con la regex")
+    # else: 
+    #     print("Hubo un error con la regex")
+
+    print("Lista de diccionarios: ", lista_diccionarios)
+
+    print("Lista de iniciales: ", lista_iniciales)
+
+    print("Lista de finales: ", lista_finales)
 
 # Probando compilar un archivo yalex.
