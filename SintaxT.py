@@ -224,7 +224,7 @@ class SintaxT:
     def analisis(self, arbol): # Función para analizar el AFD.
         # Paso 3 - Analizar el AFD.
 
-        print("Árbol: ", arbol)
+        #print("Árbol: ", arbol)
 
         diccionario = {} # Diccionario del árbol.
 
@@ -583,11 +583,12 @@ class SintaxT:
 
         grafo.render('AFD_Directo', view=True) # Dibujando el grafo.
 
-        # Guardando las transiciones en un diccionario.
-        diccionario = {}
-
         for estado in self.estadosAFD:
             self.dict[estado] = estado.transitions
+        
+        # Cambiando algunos símbolos en el diccionario.
+        # Buscar los símbolos.
+
 
         #print("Diccionario: ", diccionario)
 

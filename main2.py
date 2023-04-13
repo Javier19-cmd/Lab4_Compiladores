@@ -5,6 +5,7 @@ from AFD_Converter import *
 from SintaxT import *
 from ErroresArchivo import *
 import re
+from SimuladorTxT import *
 
 tabla = {}
 
@@ -240,35 +241,83 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
 
     # #print("ListaA: ", listaA)
 
-    # # Uniendo todas las expresiones mediante un |.
-    # expr = "|".join(listaA)
+    # Uniendo todas las expresiones mediante un |.
+    expr = "|".join(listaA)
 
-    # print("Expresión unida: ", expr)
+    print("Expresión unida: ", expr)
 
-    # reg = evaluar(expr)
+    reg = evaluar(expr)
 
-    # # Verificando que la expresión regular no tenga errores.
-    # bien = deteccion(expr)
+    # Verificando que la expresión regular no tenga errores.
+    bien = deteccion(expr)
 
-    # if bien:
+    if bien:
     
-    #     # Pasando a postfix.
-    #     regex_final = evaluar(expr)
+        # Pasando a postfix.
+        regex_final = evaluar(expr)
 
-    #     #print("Expresión unida en postfix: ", regex_final)
+        #print("Expresión unida en postfix: ", regex_final)
 
-    #     # Obteniendo alfabeto.
-    #     alf_final = alfabeto(regex_final)
+        # Obteniendo alfabeto.
+        alf_final = alfabeto(regex_final)
 
-    #     SintaxT(regex_final, alf_final)
+        #SintaxT(regex_final, alf_final)
     
-    # else: 
-    #     print("Hubo un error con la regex")
+    else: 
+        print("Hubo un error con la regex")
 
-    print("Lista de diccionarios: ", lista_diccionarios)
+    # print("Lista de diccionarios: ", lista_diccionarios)
 
-    print("Lista de iniciales: ", lista_iniciales)
+    # print("Lista de iniciales: ", lista_iniciales)
 
-    print("Lista de finales: ", lista_finales)
+    # print("Lista de finales: ", lista_finales)
+
+    new_w = " " # Quitando el ≡ de los diccionarios.
+
+    for dictionary in lista_diccionarios:
+        for key in dictionary:
+            if "≡" in dictionary[key]:
+                value = dictionary[key].pop("≡")
+                dictionary[key][new_w] = value
+    
+    # Quitando el ¥ de los diccionarios.
+    new_t = "\t"
+    for dictionary in lista_diccionarios:
+        for key in dictionary:
+            if "¥" in dictionary[key]:
+                value = dictionary[key].pop("¥")
+                dictionary[key][new_t] = value
+    
+    # Quitando el ¥ de los diccionarios.
+    new_n = "\n"
+    for dictionary in lista_diccionarios:
+        for key in dictionary:
+            if "§" in dictionary[key]:
+                value = dictionary[key].pop("§")
+                dictionary[key][new_n] = value
+    
+    # Quitando el @ de los diccionarios.
+    new_p = "+"
+    for dictionary in lista_diccionarios:
+        for key in dictionary:
+            if "@" in dictionary[key]:
+                value = dictionary[key].pop("@")
+                dictionary[key][new_p] = value
+    
+    # Quitando el ~ de los diccionarios.
+    new_m = "-"
+    for dictionary in lista_diccionarios:
+        for key in dictionary:
+            if "~" in dictionary[key]:
+                value = dictionary[key].pop("~")
+                dictionary[key][new_m] = value
+
+    archivo = "ej1.txt"
+
+    # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
+
+    # Llamando al simulador del txt.
+    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo)
+
 
 # Probando compilar un archivo yalex.
