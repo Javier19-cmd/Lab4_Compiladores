@@ -312,7 +312,7 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
                 value = dictionary[key].pop("~")
                 dictionary[key][new_m] = value
 
-    archivo = "ej1.txt"
+    archivo = "ej2.txt"
 
     # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
 
