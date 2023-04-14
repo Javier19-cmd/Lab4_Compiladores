@@ -32,6 +32,9 @@ class SimuladorTxT:
                     cad_s.append(cadena)
 
         if not diccionarios:
+            
+            print("Resultado: ", resultado)
+
             return resultado
 
 
@@ -65,8 +68,6 @@ class SimuladorTxT:
 
             # Se agrega la lista de valores de la cadena actual al resultado.
             resultado.append(valores_cadena)
-
-            print("Resultado: ", resultado)
 
             # Se llama recursivamente a la función con las listas actualizadas.
             return self.simular(diccionarios[1:], iniciales[1:], finales[1:], resultado)
