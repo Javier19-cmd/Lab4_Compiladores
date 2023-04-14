@@ -15,35 +15,42 @@ class SimuladorTxT:
         self.finales = finales
         self.archivo = archivo
 
-        self.simular(diccionarios, iniciales, finales, resultado=[])
+        
+        self.cad_s = [] # Arreglo para las cadenas a simular.                    
 
-    def simular(self, diccionarios, iniciales, finales, resultado=[]): 
-
-        cad_s = [] # Arreglo para las cadenas a simular.                    
-
-        with open(self.archivo, "r") as archivo:
-            for linea in archivo:
+        with open(self.archivo, "r") as archivos:
+            for linea in archivos:
                 # Eliminando saltos de línea y separando las cadenas.
                 cadenas = linea.strip().split()
 
                 #print("Cadenas: ", cadenas)
 
                 for cadena in cadenas: # Guardando cada cadena para simular.
-                    cad_s.append(cadena)
+                    self.cad_s.append(cadena)
+
+        resultados = self.simular(diccionarios, iniciales, finales, resultado=[])
+
+        self.impresion(resultados)
+
+    def simular(self, diccionarios, iniciales, finales, resultado=[]): 
 
         if not diccionarios:
-            
-            print("Resultado: ", resultado)
-
+            #print("Resultado: ", resultado)
             return resultado
 
 
-        if len(cad_s) == 0:
+        if len(self.cad_s) == 0:
             # Si ya no quedan más cadenas por simular, se devuelve el resultado.
+            #print("Resultado: ", resultado)
             return resultado
         else:
+
+            #print("Cad_s", self.cad_s)
+
             # Se toma la primera cadena en la lista de cadenas.
-            cadena_actual = cadenas.pop(0)
+            cadena_actual = self.cad_s.pop(0)
+
+            #print("Cadena actual: ", cadena_actual)
 
             # Se simula la cadena en cada diccionario en la lista de diccionarios.
             valores_cadena = []
@@ -57,6 +64,9 @@ class SimuladorTxT:
                 for j in range(len(cadena_actual) - 1):
                     caracter_actual = cadena_actual[j]
                     caracter_siguiente = cadena_actual[j+1]
+
+                    #print("Estado actual: ", estado_actual)
+
                     v, estado_actual = self.simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
 
                     # if v == False:
@@ -69,12 +79,18 @@ class SimuladorTxT:
             # Se agrega la lista de valores de la cadena actual al resultado.
             resultado.append(valores_cadena)
 
+            print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+
             # Se llama recursivamente a la función con las listas actualizadas.
-            return self.simular(diccionarios[1:], iniciales[1:], finales[1:], resultado)
+            return self.simular(diccionarios, iniciales, finales, resultado)
 
     def simular_cadena(self, diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
 
+        #print("Caracter: ", caracter_actual)
+
         transiciones = diccionario[estado_actual]
+
+        #print("Transiciones; ", transiciones)
 
         #print("Transiciones: ", transiciones)
 
@@ -85,11 +101,11 @@ class SimuladorTxT:
 
             if estado_actual in estados_acept:
                 #print("Cadena aceptada.")
-                return True, estado_siguiente
+                return True, estado_actual
 
             if estado_siguiente != {}:
                 # Si el estado siguiente no es vacío.
-                return False, estado_siguiente
+                return False, estado_actual
         
             else:
                 # Si el estado siguiente es vacío.
@@ -115,4 +131,10 @@ class SimuladorTxT:
         else:
             # Si no hay transición para el caracter actual ni para el siguiente.
             return False, estado_actual
-
+    
+    def impresion(self, resultado):
+        
+        print("Resultados: ", resultado)
+        
+        # for i in range(len(resultado)):
+        #     print("Cadena ", i+1, ": ", resultado[i])
