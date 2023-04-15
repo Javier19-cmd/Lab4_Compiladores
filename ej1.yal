@@ -12,16 +12,4 @@ let digit = ['0'-'9']
 (* Tercer token: hacer un digito *)
 let digits = digit+
 
-rule gettoken = 
-    ws {return "VACÍO"}
-    | digits {return "DIGITOS"}
-    | digit {return "DIGITO"}
-    | delim {return "DELIMITADOR"}
-    | "+" {return "SUMA"}
-    | "-" {return "RESTA"}
-    | "*" {return "MULTIPLICACIÓN"}
-    | "/" {return "DIVISIÓN"}
-    | "(" {return "PARENTESIS IZQUIERDO"}
-    | ")" {return "PARENTESIS DERECHO"}
-
 (* La sección de {trailer} es opcional *)

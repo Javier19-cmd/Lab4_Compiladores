@@ -147,6 +147,10 @@ class SimuladorTxT:
                 #print("Estado: ", estado_siguiente in estados_acept)
                 # Si el estado siguiente es vacío.
                 return True, estado_siguiente
+        
+        elif caracter_actual not in transiciones:
+
+            return False, estado_actual
             
         else:
     
@@ -155,9 +159,12 @@ class SimuladorTxT:
             if transiciones != {}:
                 # Si no hay transición para el caracter actual ni para el siguiente.
                 return True, estado_actual
+            
             else: 
+            
                 # Si no hay transición para el caracter actual ni para el siguiente.
                 return False, estado_actual
+    
 
 
     

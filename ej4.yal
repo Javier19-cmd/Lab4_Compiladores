@@ -3,11 +3,11 @@
 (* Definiendo números hexadecimales *)
 
 (* Definiendo las letras *)
-let letter = ['a'-'z' 'A'-'Z']
+let letterh = ['a'-'f']
 
 (* Definiendo los números *)
-let digit = ['0'-'9']
-let digits = digit+
+let digite = ['0'-'9']
+let digitse = digite+
 
 (* Definiendo los números *)
-let hexdigit = (letter)(digit)
+let hexdigit = (letterh)(digitse)|(digitse)(letterh)

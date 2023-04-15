@@ -18,4 +18,16 @@ let digits = digit+
 (* Cuarto token: hacer un identificador *)
 let id = letter(letter|digits)*
 
+rule gettoken = 
+    ws {return "VACÍO"}
+    | digits {return "DIGITOS"}
+    | digit {return "DIGITO"}
+    | delim {return "DELIMITADOR"}
+    | "+" {return "SUMA"}
+    | "-" {return "RESTA"}
+    | "*" {return "MULTIPLICACIÓN"}
+    | "/" {return "DIVISIÓN"}
+    | "(" {return "PARENTESIS IZQUIERDO"}
+    | ")" {return "PARENTESIS DERECHO"}
+
 (* La sección de {trailer} es opcional *)

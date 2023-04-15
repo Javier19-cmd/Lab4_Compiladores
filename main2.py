@@ -8,10 +8,10 @@ import re
 from SimuladorTxT import *
 
 tabla = {}
-archivo = "ej2.txt"
+archivo = "ej4.txt"
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej2.yal", "r", encoding='utf-8') as file:
+with open("ej4.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -147,7 +147,6 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
     if 'sign' in tabla: 
         new_signs = "(@|~)"
         tabla['sign'] = tabla['sign'].replace("['+'|'-']", new_signs)
-
     
     # Leyendo el delim.
     if 'delim' in tabla:
@@ -166,13 +165,25 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
         # Verificando si se hizo el cambio.
         #print("Tabla: ", tabla)
     
+    if 'letterh' in tabla: 
+        new_letters_h = '(a|b|c|d|e|f)'
+        tabla['letterh'] = tabla['letterh'].replace("['a'-'f']", new_letters_h)
+    
+    if 'digite' in tabla: 
+        new_digits_e = '(0|1|2|3|4|5|6|7|8|9)'
+        tabla['digite'] = tabla['digite'].replace("['0'-'9']", new_digits_e)
+    
+    if 'digitse' in tabla: 
+        new_digitsp_e = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
+        tabla['digitse'] = tabla['digitse'].replace("digite+", new_digitsp_e)
+    
     # Buscando los hexdigit.
     if 'hexdigit' in tabla:
-        new_letters = '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)'
-        new_digits = '(0|1|2|3|4|5|6|7|8|9)'
+        new_letters_h = '(a|b|c|d|e|f)'
+        new_digits_e = '(a|b|c|d|e|f)(0|1|2|3|4|5|6|7|8|9)'
 
-        tabla['hexdigit'] = tabla['hexdigit'].replace("letter", new_letters)
-        tabla['hexdigit'] = tabla['hexdigit'].replace("digit", new_digits)
+        tabla['hexdigit'] = tabla['hexdigit'].replace("letterh", new_letters_h)
+        tabla['hexdigit'] = tabla['hexdigit'].replace("digitse", new_digits_e)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
