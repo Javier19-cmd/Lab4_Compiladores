@@ -7,10 +7,7 @@ let letter = ['a'-'z' 'A'-'Z']
 
 (* Definiendo los números *)
 let digit = ['0'-'9']
-
-(* Definiendo los signos *)
-
-let sign = ['+'|'-']
+let digits = digit+
 
 (* Definiendo los números *)
-let hexdigit = letter(digits('E'[sign]?digits)?)
+let hexdigit = (letter)(digit)

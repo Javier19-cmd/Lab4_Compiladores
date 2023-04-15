@@ -165,6 +165,14 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
         # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
         # Verificando si se hizo el cambio.
         #print("Tabla: ", tabla)
+    
+    # Buscando los hexdigit.
+    if 'hexdigit' in tabla:
+        new_letters = '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)'
+        new_digits = '(0|1|2|3|4|5|6|7|8|9)'
+
+        tabla['hexdigit'] = tabla['hexdigit'].replace("letter", new_letters)
+        tabla['hexdigit'] = tabla['hexdigit'].replace("digit", new_digits)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
