@@ -88,6 +88,8 @@ class SimuladorTxT:
 
         #print("Caracter: ", caracter_actual)
 
+        #print("Estados de aceptación: ", estados_acept)
+
         transiciones = diccionario[estado_actual]
 
         #print("Transiciones; ", transiciones)
@@ -99,17 +101,26 @@ class SimuladorTxT:
 
             #print("Estado siguiente: ", estado_siguiente)
 
-            if estado_actual in estados_acept:
+            if estado_siguiente in estados_acept:
                 #print("Cadena aceptada.")
                 return True, estado_actual
 
-            if estado_siguiente != {}:
-                # Si el estado siguiente no es vacío.
+            if estado_siguiente == {}:
+
+                #print("Falso en caracter actual", estado_siguiente)
+
                 return False, estado_actual
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_actual
         
             else:
+
+                #print("Estado: ",estado_actual, estado_actual in estados_acept)
+
                 # Si el estado siguiente es vacío.
-                return False, estado_actual
+                return True, estado_siguiente
             
         elif caracter_siguiente in transiciones:
 
@@ -120,17 +131,35 @@ class SimuladorTxT:
                 #print("Cadena aceptada.")
                 return True, estado_siguiente
 
-            if estado_siguiente != {}:
+            if estado_siguiente == {}:
+                
+                #print("Falso en caracter actual", estado_siguiente)
+
                 # Si el estado siguiente no es vacío.
                 return False, estado_siguiente
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_siguiente
         
             else:
+                #print("Estado: ", estado_siguiente)
+                #print("Estado: ", estado_siguiente in estados_acept)
                 # Si el estado siguiente es vacío.
-                return False, estado_actual
+                return True, estado_siguiente
             
         else:
-            # Si no hay transición para el caracter actual ni para el siguiente.
-            return False, estado_actual
+    
+            #print("Estado actual: ", estado_actual, transiciones)
+
+            if transiciones != {}:
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return True, estado_actual
+            else: 
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return False, estado_actual
+
+
     
     def impresion(self, resultado):
         

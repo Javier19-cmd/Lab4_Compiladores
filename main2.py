@@ -8,6 +8,7 @@ import re
 from SimuladorTxT import *
 
 tabla = {}
+archivo = "ej2.txt"
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
 with open("ej2.yal", "r", encoding='utf-8') as file:
@@ -311,8 +312,6 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
             if "~" in dictionary[key]:
                 value = dictionary[key].pop("~")
                 dictionary[key][new_m] = value
-
-    archivo = "ej2.txt"
 
     # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
 

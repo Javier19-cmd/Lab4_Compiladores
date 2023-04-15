@@ -16,6 +16,6 @@ let digits = digit+
 let sign = ['+'|'-']
 
 (* Quinto token: hacer un número *)
-let number = digits(,digits)?('E'[sign]?digits)?
+let number = (sign)?digits(,digits)?
 
 (* La sección de {trailer} es opcional *)
