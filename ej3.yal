@@ -19,15 +19,12 @@ let digits = digit+
 let id = letter(letter|digits)*
 
 rule gettoken = 
-    ws {return "VACÍO"}
-    | digits {return "DIGITOS"}
-    | digit {return "DIGITO"}
-    | delim {return "DELIMITADOR"}
-    | "+" {return "SUMA"}
-    | "-" {return "RESTA"}
-    | "*" {return "MULTIPLICACIÓN"}
-    | "/" {return "DIVISIÓN"}
-    | "(" {return "PARENTESIS IZQUIERDO"}
-    | ")" {return "PARENTESIS DERECHO"}
-
-(* La sección de {trailer} es opcional *)
+    "IF" {return "IF"}
+    | "THEN" {return "THEN"}
+    | "ELSE" {return "ELSE"}
+    | "WHILE" {return "WHILE"}
+    | "BREAK" {return "BREAK"}
+    | "CONTINUE" {return "CONTINUE"}
+    | "RETURN" {return "RETURN"}
+    | "TRUE" {return "TRUE"}
+    | "FALSE" {return "FALSE"}

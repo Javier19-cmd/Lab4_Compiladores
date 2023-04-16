@@ -7,11 +7,15 @@ from ErroresArchivo import *
 import re
 from SimuladorTxT import *
 
-tabla = {}
-archivo = "ej4.txt"
+tabla = {} # Tabla para guardar las declaraciones con let.
+archivo = "ej3.txt"
+
+tabla_res = {} # Tabla para guardar las palabras reservadas.
+
+res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej4.yal", "r", encoding='utf-8') as file:
+with open("ej3.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -53,7 +57,7 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
         # Revisando que las declaraciones de variables estén bien escritas.
 
         # Imprimiendo las declaraciones.
-        print(var[0])
+        #print(var[0])
 
         bool, expres = deteccion2(var[0])
         
@@ -75,7 +79,50 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
         
         if bool == "OF":
             print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la regex finaliza con un |.")
-        
+    
+    # Jalando los tokens especiales.
+    if "rule gettoken =" in data:
+        # Extrayendo la cadena de texto que contiene los tokens especiales.
+        cadena_tokens = data[data.find("rule gettoken ="):]
+        # Separando los tokens en una lista.
+        lista_tokens = cadena_tokens.split("|")
+        # Creando el diccionario para guardar los tokens.
+        diccionario_tokens = {}
+        # Iterando sobre la lista de tokens y agregándolos al diccionario.
+        for token in lista_tokens:
+            # Extrayendo el nombre del token y su valor.
+            nombre, valor = token.split("return")
+            # Agregando el token al diccionario.
+            diccionario_tokens[nombre.strip()] = valor.strip().strip("\"")
+        # Imprimiendo el diccionario con los tokens.
+        #print(diccionario_tokens)
+
+    # Crear un nuevo diccionario sin la cadena deseada.
+    nuevo_diccionario = {}
+    for clave, valor in diccionario_tokens.items():
+        clave_limpia = clave.replace('rule gettoken = \n', "").strip()
+        nuevo_diccionario[clave_limpia] = valor
+
+    # Imprimir el nuevo diccionario sin la cadena.
+    #print(nuevo_diccionario)
+
+    # Ordenando el diccionario.
+    diccionario_ordenado = dict(sorted(nuevo_diccionario.items()))
+    #print("Diccionario ordenado: ", diccionario_ordenado)
+
+    lista_temp = []
+
+    for clave in diccionario_ordenado.keys():
+        palabra = clave.replace('{', '').strip()
+        lista_temp.append(palabra)
+    
+    #print(lista_temp)
+
+    for elemento in lista_temp:
+        elemento_sin_comillas = elemento.replace('"', "")
+        res_list.append(elemento_sin_comillas)
+    
+    #print(res_list)
 
     # Almacenando el nombre de las variables y su expresión regular en la tabla.
     for variable in variables:
@@ -335,7 +382,7 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
     # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
 
     # Llamando al simulador del txt.
-    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo)
+    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo, res_list)
 
 
 # Probando compilar un archivo yalex.

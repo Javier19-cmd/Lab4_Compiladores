@@ -9,11 +9,14 @@ Clase SimuladorTxt:
 
 class SimuladorTxT:
 
-    def __init__(self, diccionarios, iniciales, finales, archivo):
+    def __init__(self, diccionarios, iniciales, finales, archivo, reservadas=[]):
         self.diccionarios = diccionarios
         self.iniciales = iniciales
         self.finales = finales
         self.archivo = archivo
+        self.reservadas = reservadas
+
+        print("Palabras reservadas: ", self.reservadas)
 
         
         self.cad_s = [] # Arreglo para las cadenas a simular.                    
@@ -79,7 +82,7 @@ class SimuladorTxT:
             # Se agrega la lista de valores de la cadena actual al resultado.
             resultado.append(valores_cadena)
 
-            print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+            #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
 
             # Se llama recursivamente a la función con las listas actualizadas.
             return self.simular(diccionarios, iniciales, finales, resultado)
