@@ -243,5 +243,5 @@ class SimuladorTxT:
 
     def impresion_res(self, resultado): # Método para simular los resultados de la simulada de los archivos txt.
         
-        print("Resultados de simular las cadenas del archivo txt: ", resultado)
+        print("Resultados de simular las cadenas de las palabras reservadas: ", resultado)
         
