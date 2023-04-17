@@ -97,30 +97,30 @@ with open("ej3.yal", "r", encoding='utf-8') as file:
         # Imprimiendo el diccionario con los tokens.
         #print(diccionario_tokens)
 
-    # Crear un nuevo diccionario sin la cadena deseada.
-    nuevo_diccionario = {}
-    for clave, valor in diccionario_tokens.items():
-        clave_limpia = clave.replace('rule gettoken = \n', "").strip()
-        nuevo_diccionario[clave_limpia] = valor
+        # Crear un nuevo diccionario sin la cadena deseada.
+        nuevo_diccionario = {}
+        for clave, valor in diccionario_tokens.items():
+            clave_limpia = clave.replace('rule gettoken = \n', "").strip()
+            nuevo_diccionario[clave_limpia] = valor
 
     # Imprimir el nuevo diccionario sin la cadena.
     #print(nuevo_diccionario)
 
-    # Ordenando el diccionario.
-    diccionario_ordenado = dict(sorted(nuevo_diccionario.items()))
-    #print("Diccionario ordenado: ", diccionario_ordenado)
+        # Ordenando el diccionario.
+        diccionario_ordenado = dict(sorted(nuevo_diccionario.items()))
+        #print("Diccionario ordenado: ", diccionario_ordenado)
 
-    lista_temp = []
+        lista_temp = []
 
-    for clave in diccionario_ordenado.keys():
-        palabra = clave.replace('{', '').strip()
-        lista_temp.append(palabra)
-    
-    #print(lista_temp)
+        for clave in diccionario_ordenado.keys():
+            palabra = clave.replace('{', '').strip()
+            lista_temp.append(palabra)
+        
+        #print(lista_temp)
 
-    for elemento in lista_temp:
-        elemento_sin_comillas = elemento.replace('"', "")
-        res_list.append(elemento_sin_comillas)
+        for elemento in lista_temp:
+            elemento_sin_comillas = elemento.replace('"', "")
+            res_list.append(elemento_sin_comillas)
     
     #print(res_list)
 

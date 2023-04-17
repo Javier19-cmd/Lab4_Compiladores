@@ -16,7 +16,9 @@ class SimuladorTxT:
         self.archivo = archivo
         self.reservadas = reservadas
 
-        print("Palabras reservadas: ", self.reservadas)
+        res_copy = self.reservadas.copy()
+
+        #print("Palabras reservadas: ", self.reservadas)
 
         
         self.cad_s = [] # Arreglo para las cadenas a simular.                    
@@ -38,6 +40,11 @@ class SimuladorTxT:
         resultados_res = self.simular_res(diccionarios, iniciales, finales, resultado=[])
 
         self.impresion_res(resultados_res)
+        
+        # Generando el archivo py. 
+        self.archivopy = "implmentacion.py"
+        
+        self.generar_py(self.archivopy, self.diccionarios, self.iniciales, self.finales, self.archivo, res_copy)
 
     def simular_cadenas(self, diccionarios, iniciales, finales, resultado=[]): # Simulando las cadenas que vienen en el archivo txt.
 
@@ -87,6 +94,16 @@ class SimuladorTxT:
             resultado.append(valores_cadena)
 
             #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+
+            # Verificando si el último resultado es True.
+            if valores_cadena[-1] == True:
+                pass
+            else:
+                # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
+                with open(self.archivo, "r") as archivos:
+                    for i, linea in enumerate(archivos):
+                        if cadena_actual in linea:
+                            print("Cadena no aceptada: " + cadena_actual + " línea: ", i+1)
 
             if cadena_actual in self.reservadas:
                 # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
@@ -244,4 +261,43 @@ class SimuladorTxT:
     def impresion_res(self, resultado): # Método para simular los resultados de la simulada de los archivos txt.
         
         print("Resultados de simular las cadenas de las palabras reservadas: ", resultado)
+    
+
+    # Generando el archivo .py.
+    def generar_py(self, nombre, diccionarios, iniciales, finales, archivo, reservadas):
+
+        print(diccionarios)
+        print(iniciales)
+        print(finales)
+        print(archivo)
+        print(reservadas)
+    
+
+        datas = """
+# Variables globales a utilizar.
+diccionarios = {}
+iniciales = {}
+finales = {}
+archivo = {}
+reservadas = {}
+
+def main():
+
+    # Definiendo un arreglo para las cadenas a simular.
+    cadenas = []
+
+    with open(archivo, "r") as archivos:
+        for linea in archivos: 
+            cadena = linea.strip().split()
+
+            for cadena in cadenas: # Guardando cada cadena para simular.
+                cadenas.append(cadena)    
+
+if __name__ == "__main__":
+    main()
+
+""".format(diccionarios, iniciales, finales, str('"{}"'.format(nombre)), reservadas)
         
+        with open(nombre, "w") as f:
+            f.write(datas)
+            f.close()
