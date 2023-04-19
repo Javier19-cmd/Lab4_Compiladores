@@ -8,14 +8,14 @@ import re
 from SimuladorTxT import *
 
 tabla = {} # Tabla para guardar las declaraciones con let.
-archivo = "ej1.txt"
+archivo = "ej4.txt"
 
 tabla_res = {} # Tabla para guardar las palabras reservadas.
 
 res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej1.yal", "r", encoding='utf-8') as file:
+with open("ej4.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)

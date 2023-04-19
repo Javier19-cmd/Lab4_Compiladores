@@ -272,11 +272,11 @@ class SimuladorTxT:
     # Generando el archivo .py.
     def generar_py(self, nombre, diccionarios, iniciales, finales, archivo, reservadas):
 
-        print(diccionarios)
-        print(iniciales)
-        print(finales)
-        print(archivo)
-        print(reservadas)
+        # print(diccionarios)
+        # print(iniciales)
+        # print(finales)
+        # print(archivo)
+        # print(reservadas)
         vacio = {}
     
 
