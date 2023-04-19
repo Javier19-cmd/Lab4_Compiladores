@@ -103,7 +103,7 @@ class SimuladorTxT:
                 with open(self.archivo, "r") as archivos:
                     for i, linea in enumerate(archivos):
                         if cadena_actual in linea:
-                            print("Cadena no aceptada: " + cadena_actual + " línea: ", i+1)
+                            print("Sintax error: " + cadena_actual + " line: ", i+1)
 
             if cadena_actual in self.reservadas:
                 # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
@@ -192,10 +192,16 @@ class SimuladorTxT:
             if estado_siguiente in estados_acept:
                 #print("Cadena aceptada.")
                 return True, estado_actual
+            
+            # if estado_actual in estados_acept:
+            #     print("Cadena aceptada.")
+            #     return True, estado_actual
 
             if estado_siguiente == {}:
 
                 #print("Falso en caracter actual", estado_siguiente)
+                # print("Estado actual: ", estado_actual)
+                # print("Estado siguiente: ", estado_siguiente)
 
                 return False, estado_actual
             
@@ -221,7 +227,7 @@ class SimuladorTxT:
 
             if estado_siguiente == {}:
                 
-                #print("Falso en caracter actual", estado_siguiente)
+                #print("Falso en caracter siguiente", estado_siguiente)
 
                 # Si el estado siguiente no es vacío.
                 return False, estado_siguiente
@@ -271,6 +277,7 @@ class SimuladorTxT:
         print(finales)
         print(archivo)
         print(reservadas)
+        vacio = {}
     
 
         datas = f"""
@@ -280,6 +287,7 @@ iniciales = {'{}'}
 finales = {'{}'}
 archivo = {'{}'}
 reservadas = {'{}'}
+vacio = {'{}'}
 
 def main():
     
@@ -357,7 +365,7 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
             with open(archivo, "r") as archivos:
                 for i, linea in enumerate(archivos):
                     if cadena_actual in linea:
-                        print("Cadena no aceptada: " + cadena_actual + " l�nea: ", i+1)
+                        print("Sintax error: " + cadena_actual + " line: ", i+1)
 
         if cadena_actual in reservadas:
             # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
@@ -513,10 +521,7 @@ def impresion_res(resultados_res):
 
 if __name__ == "__main__":
     main()
-
-
-
-""".format(diccionarios, iniciales, finales, str('"{}"'.format(archivo)), reservadas)
+""".format(diccionarios, iniciales, finales, str('"{}"'.format(archivo)), reservadas, vacio)
         
         with open(nombre, 'w', encoding='utf-8') as f:
             f.write(datas)

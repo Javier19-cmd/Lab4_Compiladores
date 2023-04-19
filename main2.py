@@ -8,14 +8,14 @@ import re
 from SimuladorTxT import *
 
 tabla = {} # Tabla para guardar las declaraciones con let.
-archivo = "ej3.txt"
+archivo = "ej1.txt"
 
 tabla_res = {} # Tabla para guardar las palabras reservadas.
 
 res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej3.yal", "r", encoding='utf-8') as file:
+with open("ej1.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -213,8 +213,12 @@ with open("ej3.yal", "r", encoding='utf-8') as file:
         #print("Tabla: ", tabla)
     
     if 'letterh' in tabla: 
-        new_letters_h = '(a|b|c|d|e|f)'
-        tabla['letterh'] = tabla['letterh'].replace("['a'-'f']", new_letters_h)
+        new_letters_h = '(A|B|C|D|E|F)'
+        tabla['letterh'] = tabla['letterh'].replace("['A'-'F']", new_letters_h)
+    
+    if 'lettersh' in tabla: 
+        new_letters_hs = '(A|B|C|D|E|F)(A|B|C|D|E|F)*'
+        tabla['lettersh'] = tabla['lettersh'].replace("letterh+", new_letters_hs)
     
     if 'digite' in tabla: 
         new_digits_e = '(0|1|2|3|4|5|6|7|8|9)'
@@ -226,8 +230,8 @@ with open("ej3.yal", "r", encoding='utf-8') as file:
     
     # Buscando los hexdigit.
     if 'hexdigit' in tabla:
-        new_letters_h = '(a|b|c|d|e|f)'
-        new_digits_e = '(a|b|c|d|e|f)(0|1|2|3|4|5|6|7|8|9)'
+        new_letters_h = '(A|B|C|D|E|F)'
+        new_digits_e = '(0|1|2|3|4|5|6|7|8|9)'
 
         tabla['hexdigit'] = tabla['hexdigit'].replace("letterh", new_letters_h)
         tabla['hexdigit'] = tabla['hexdigit'].replace("digitse", new_digits_e)
