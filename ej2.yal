@@ -12,10 +12,21 @@ let digit = ['0'-'9']
 (* Tercer token: hacer un digito *)
 let digits = digit+
 
-(* Quinto token: hacer los signos *)
-let sign = ['+'|'-']
+(* Sexto token: expresión regular que solo acepte letras *)
+let letter = ['a'-'z' 'A'-'Z']
 
-(* Quinto token: hacer un número *)
-let number = (sign)?digits(,digits)?
+(* Séptimo token: expresión regular que acepte identificadores *)
+let id = letter(letter|digits)*
 
 (* La sección de {trailer} es opcional *)
+rule rule gettoken = 
+    "IF" {return "IF"}
+    | "FOR" {return "FOR"}
+    | "WHILE" {return "WHILE"}
+    | "+" {return "SUMA"}
+    | "-" {return "RESTA"}
+    | "*" {return "MULTIPLICACION"}
+    | "/" {return "DIVISION"}
+    | "(" {return "PARENTESIS_IZQUIERDO"}
+    | ")" {return "PARENTESIS_DERECHO"}
+    | "^" {return "POTENCIA"}

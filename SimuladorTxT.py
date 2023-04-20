@@ -9,12 +9,13 @@ Clase SimuladorTxt:
 
 class SimuladorTxT:
 
-    def __init__(self, diccionarios, iniciales, finales, archivo, reservadas=[]):
+    def __init__(self, diccionarios, iniciales, finales, archivo, reservadas=[], operadores_reservados=[]):
         self.diccionarios = diccionarios
         self.iniciales = iniciales
         self.finales = finales
         self.archivo = archivo
         self.reservadas = reservadas
+        self.operadores_reservados = operadores_reservados
 
         res_copy = self.reservadas.copy()
 
@@ -51,6 +52,12 @@ class SimuladorTxT:
         if not diccionarios:
             #print("Resultado: ", resultado)
             return resultado
+        
+        # # Detectando los operadores.
+        # if len(caracter_actual) == 1: # Detectando primero su longitud.
+        #     if caracter_actual in self.operadores_reservados: # Detectando si es un operador.
+        #         print("Operador detectado")
+        #         return True, estado_actual
 
 
         if len(self.cad_s) == 0:
@@ -64,6 +71,11 @@ class SimuladorTxT:
             # Se toma la primera cadena en la lista de cadenas.
             cadena_actual = self.cad_s.pop(0)
 
+            # # Detectando los operadores.
+            # if len(cadena_actual) == 1: # Detectando primero su longitud.
+            #     if cadena_actual in self.operadores_reservados: # Detectando si es un operador.
+            #         print("Operador detectado")
+
             #print("Cadena actual: ", cadena_actual)
 
             # Se simula la cadena en cada diccionario en la lista de diccionarios.
@@ -73,6 +85,23 @@ class SimuladorTxT:
                 estado_ini = iniciales[i]
                 estados_acept = finales[i]
                 estado_actual = estado_ini[0]
+
+                # Detectando los operadores.
+                if len(cadena_actual) == 1:
+                    if cadena_actual in self.operadores_reservados: 
+                        #valores_cadena.append(True)
+
+                        # Verificando que se haya llegado al último diccionario.
+                        if i == len(diccionarios) - 1:
+                            # Si se llegó al último diccionario, se agrega el valor a la lista de valores de la cadena actual.
+                            valores_cadena.append(True)
+
+                    else: 
+                        
+                        # Verificando que se haya llegado al último diccionario.
+                        if i == len(diccionarios) - 1:
+                            # Si se llegó al último diccionario, se agrega el valor a la lista de valores de la cadena actual.
+                            valores_cadena.append(True)
 
                 # Se simula la cadena en el diccionario actual.
                 for j in range(len(cadena_actual) - 1):
@@ -95,8 +124,8 @@ class SimuladorTxT:
 
             #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
 
-            # Verificando si el último resultado es True.
-            if valores_cadena[-1] == True:
+            # Verificando si hay un true en la lista de valores cadena.
+            if True in valores_cadena:
                 pass
             else:
                 # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
@@ -182,8 +211,8 @@ class SimuladorTxT:
 
         #print("Transiciones; ", transiciones)
 
-        #print("Transiciones: ", transiciones)
-
+        # print("Caracter actual: ", caracter_actual)
+    
         if caracter_actual in transiciones:
             estado_siguiente = transiciones[caracter_actual]
 

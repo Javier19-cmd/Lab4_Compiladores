@@ -8,14 +8,14 @@ import re
 from SimuladorTxT import *
 
 tabla = {} # Tabla para guardar las declaraciones con let.
-archivo = "ej4.txt"
+archivo = "ej2.txt"
 
 tabla_res = {} # Tabla para guardar las palabras reservadas.
 
 res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej4.yal", "r", encoding='utf-8') as file:
+with open("ej2.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -97,14 +97,16 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
         # Imprimiendo el diccionario con los tokens.
         #print(diccionario_tokens)
 
+        # Detectando las palabras reservadas.
+
         # Crear un nuevo diccionario sin la cadena deseada.
         nuevo_diccionario = {}
         for clave, valor in diccionario_tokens.items():
             clave_limpia = clave.replace('rule gettoken = \n', "").strip()
             nuevo_diccionario[clave_limpia] = valor
 
-    # Imprimir el nuevo diccionario sin la cadena.
-    #print(nuevo_diccionario)
+        # Imprimir el nuevo diccionario sin la cadena.
+        # print(nuevo_diccionario)
 
         # Ordenando el diccionario.
         diccionario_ordenado = dict(sorted(nuevo_diccionario.items()))
@@ -121,7 +123,26 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
         for elemento in lista_temp:
             elemento_sin_comillas = elemento.replace('"', "")
             res_list.append(elemento_sin_comillas)
-    
+        
+        # Detectando los operadores aritméticos del gettoken.
+        operadores = ["*", "^", "+", "-", "/", "(", ")"]
+
+        # Lista para los operadores reservados.
+        operadores_reservados = []
+
+        # Operadores reservados.
+        for elemento in res_list:
+            #print("Elemento: ", elemento)
+            if elemento in operadores:
+                operadores_reservados.append(elemento)
+
+        print("Operadores resrvados: ", operadores_reservados)
+
+        # Sacando los operadores de la lista de palabras reservadas.
+        for elemento in operadores_reservados:
+            res_list.remove(elemento)
+
+
     #print(res_list)
 
     # Almacenando el nombre de las variables y su expresión regular en la tabla.
@@ -386,7 +407,7 @@ with open("ej4.yal", "r", encoding='utf-8') as file:
     # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
 
     # Llamando al simulador del txt.
-    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo, res_list)
+    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo, res_list, operadores_reservados)
 
 
 # Probando compilar un archivo yalex.
