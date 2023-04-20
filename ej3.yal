@@ -15,16 +15,21 @@ let digit = ['0'-'9']
 (* Tercer token: hacer un digito *)
 let digits = digit+
 
-(* Cuarto token: hacer un identificador *)
-let id = letter(letter|digits)*
+(* Cuarto token: espacios en blanco*)
+let space = (_)+
+
+(* Quinto token: caracter final *)
+let endline = ['xyz']
+
+(* Sexto token: hacer un identificador *)
+let id = ((letter|digits|space)*)endline
+
+(* Séptimo token: hacer los signos *)
+let sign = ['+'|'-']
+
+(* Octavo token: hacer un número *)
+let number = (sign)?digits(,digits)?
 
 rule gettoken = 
     "IF" {return "IF"}
-    | "THEN" {return "THEN"}
-    | "ELSE" {return "ELSE"}
-    | "WHILE" {return "WHILE"}
-    | "BREAK" {return "BREAK"}
-    | "CONTINUE" {return "CONTINUE"}
-    | "RETURN" {return "RETURN"}
-    | "TRUE" {return "TRUE"}
-    | "FALSE" {return "FALSE"}
+    | "FOR" {return "FOR"}

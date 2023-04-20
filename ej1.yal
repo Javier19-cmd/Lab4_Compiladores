@@ -12,4 +12,30 @@ let digit = ['0'-'9']
 (* Tercer token: hacer un digito *)
 let digits = digit+
 
+(* Séptimo token: hacer los signos *)
+let sign = ['+'|'-']
+
+(* Octavo token: hacer un número *)
+let number = (sign)?digits(,digits)?
+
+(* Definiendo las letras *)
+let letterh = ['A'-'F']
+let lettersh = letterh+
+
+(* Definiendo los números *)
+let digite = ['0'-'9']
+let digitse = digite+
+
+(* Definiendo los números *)
+let hexdigit = ((letterh)(digitse))|((digitse)(letterh))
+
+rule gettoken = 
+     "+" {return "SUMA"}
+    | "-" {return "RESTA"}
+    | "*" {return "MULTIPLICACION"}
+    | "/" {return "DIVISION"}
+    | "(" {return "PARENTESIS_IZQUIERDO"}
+    | ")" {return "PARENTESIS_DERECHO"}
+    | "^" {return "POTENCIA"}
+
 (* La sección de {trailer} es opcional *)

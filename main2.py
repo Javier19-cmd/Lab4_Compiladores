@@ -8,14 +8,14 @@ import re
 from SimuladorTxT import *
 
 tabla = {} # Tabla para guardar las declaraciones con let.
-archivo = "ej2.txt"
+archivo = "ej1.txt"
 
 tabla_res = {} # Tabla para guardar las palabras reservadas.
 
 res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej2.yal", "r", encoding='utf-8') as file:
+with open("ej1.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -178,25 +178,36 @@ with open("ej2.yal", "r", encoding='utf-8') as file:
         new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         tabla['digits'] = tabla['digits'].replace("digit+", new_digitsp)
     
+    # Verificando si hay una definición de space.
+    if 'space' in tabla: 
+        new_space = '(_)(_)*'
+        tabla['space'] = tabla['space'].replace("space", new_space)
+    
+    # Verificando si hay una definición de endline.
+    if 'endline' in tabla:
+        new_endline = '(xyz)(xyz)*'
+        tabla['endline'] = tabla['endline'].replace("endline", new_endline)
+    
     #print("Tabla: ", tabla)
 
     # Verificando si hay una definición id.
     if 'id' in tabla:
         new_letters = '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)'
         new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
+        new_space = '(_)(_)*'
+        new_endline = '(xyz)(xyz)*'
         """
             El reemplazo sería:
-            id = letter (letter | digit)*
-            en donde letter se cambia por new1_letters 
-            y digits por new1_digitsp
+            id = (letter(letter|digits|space)*)endline
+            en donde letter se cambia por new1_letters, 
+            digits por new_digitsp, space por new_space,
+            y endline por new_endline.
         """
 
         tabla['id'] = tabla['id'].replace("letter", new_letters)
         tabla['id'] = tabla['id'].replace("digits", new_digitsp)
-
-        # Si existe un str, o sea un (_)*, colocarlo también.
-        if 'str' in tabla:
-            tabla['id'] = tabla['id'].replace("str", tabla['str'])
+        tabla['id'] = tabla['id'].replace("space", new_space)
+        tabla['id'] = tabla['id'].replace("endline", new_endline)
         
     #print("Tabla: ", tabla)
 

@@ -71,6 +71,27 @@ class SimuladorTxT:
             # Se toma la primera cadena en la lista de cadenas.
             cadena_actual = self.cad_s.pop(0)
 
+            #print("Cadena actual: ", cadena_actual)
+
+            if cadena_actual.count('"') == 2: # Detectando si la cadena actual es una cadena de texto.
+                
+                for caracter in cadena_actual:
+                    if caracter.isalpha():
+                        #print("Caracter")
+                        # Quitar las comillas de la cadena.
+                        cadena_actual = cadena_actual.replace('"', '')
+                
+            else: 
+                # Si no es una cadena de texto, se verifica si es una palabra reservada.
+                if cadena_actual in self.reservadas:
+                    # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
+                    print("Palabra reservada", cadena_actual)
+                    resultado.append(True)
+                
+                # Si la cadena es diferente a un número, entonces no importa.
+                if cadena_actual.isdigit() == False:
+                    pass
+
             # # Detectando los operadores.
             # if len(cadena_actual) == 1: # Detectando primero su longitud.
             #     if cadena_actual in self.operadores_reservados: # Detectando si es un operador.
@@ -178,7 +199,7 @@ class SimuladorTxT:
 
                     #print("Estado actual: ", estado_actual)
 
-                    v, estado_actual = self.simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
+                    v, estado_actual = self.simular_cadena2(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
 
                     # if v == False:
                     #     valores_cadena.append(v)
@@ -204,6 +225,92 @@ class SimuladorTxT:
     def simular_cadena(self, diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
 
         #print("Caracter: ", caracter_actual)
+
+        #print("Estados de aceptación: ", estados_acept)
+
+        transiciones = diccionario[estado_actual]
+
+        #print("Transiciones; ", transiciones)
+
+        # print("Caracter actual: ", caracter_actual)
+    
+        if caracter_actual in transiciones:
+            estado_siguiente = transiciones[caracter_actual]
+
+            #print("Estado siguiente: ", estado_siguiente)
+
+            if estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_actual
+            
+            # if estado_actual in estados_acept:
+            #     print("Cadena aceptada.")
+            #     return True, estado_actual
+
+            if estado_siguiente == {}:
+
+                #print("Falso en caracter actual", estado_siguiente)
+                # print("Estado actual: ", estado_actual)
+                # print("Estado siguiente: ", estado_siguiente)
+
+                return False, estado_actual
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_actual
+        
+            else:
+
+                #print("Estado: ",estado_actual, estado_actual in estados_acept)
+
+                # Si el estado siguiente es vacío.
+                return True, estado_siguiente
+            
+        elif caracter_siguiente in transiciones:
+
+            # Si no hay transición para el caracter actual, pero sí para el siguiente.
+            estado_siguiente = transiciones[caracter_siguiente]
+
+            if estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_siguiente
+
+            if estado_siguiente == {}:
+                
+                #print("Falso en caracter siguiente", estado_siguiente)
+
+                # Si el estado siguiente no es vacío.
+                return False, estado_siguiente
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_siguiente
+        
+            else:
+                #print("Estado: ", estado_siguiente)
+                #print("Estado: ", estado_siguiente in estados_acept)
+                # Si el estado siguiente es vacío.
+                return True, estado_siguiente
+        
+        elif caracter_actual not in transiciones:
+
+            return False, estado_actual
+            
+        else:
+    
+            #print("Estado actual: ", estado_actual, transiciones)
+
+            if transiciones != {}:
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return True, estado_actual
+            
+            else: 
+            
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return False, estado_actual
+    
+    def simular_cadena2(self, diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
+                #print("Caracter: ", caracter_actual)
 
         #print("Estados de aceptación: ", estados_acept)
 
