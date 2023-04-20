@@ -22,7 +22,7 @@ let space = (_)+
 let endline = ['xyz']
 
 (* Sexto token: hacer un identificador *)
-let id = ((letter|digits|space)*)endline
+let id = (letter|digits|space)*endline
 
 (* Séptimo token: hacer los signos *)
 let sign = ['+'|'-']

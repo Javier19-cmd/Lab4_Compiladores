@@ -8,4 +8,5 @@
 56 78 90
 IF FOR WHILE
 + * - / ^ 
-( ) 
+( ) abbcc aabbcc
+asbbccsscc bbbsssasw

@@ -71,6 +71,9 @@ class SimuladorTxT:
             # Se toma la primera cadena en la lista de cadenas.
             cadena_actual = self.cad_s.pop(0)
 
+            # Sacando una copia de la cadena.
+            cadena_copy = cadena_actual
+
             #print("Cadena actual: ", cadena_actual)
 
             if cadena_actual.count('"') == 2: # Detectando si la cadena actual es una cadena de texto.
@@ -139,6 +142,24 @@ class SimuladorTxT:
 
                     if j == len(cadena_actual) - 2:
                         valores_cadena.append(v)
+            
+            # Si la copia de la cadena tenía "", entonces analizar su lista de valores_cadena.
+            if cadena_copy.count('"') == 2:
+                print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+
+                # Verificando si hay un true en la lista de valores cadena en la posición 7.
+                if valores_cadena[6] == True:
+                    pass
+                else:
+                    
+                    valores_cadena[7] = False
+
+                    # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
+                    with open(self.archivo, "r") as archivos:
+                        for i, linea in enumerate(archivos):
+                            if cadena_actual in linea:
+                                print("Sintax error: " + cadena_actual + " line: ", i+1)
+                
 
             # Se agrega la lista de valores de la cadena actual al resultado.
             resultado.append(valores_cadena)
