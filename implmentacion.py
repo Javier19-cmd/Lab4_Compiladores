@@ -6,6 +6,7 @@ finales = [[1], [1], [1], [1], [1], [1, 2]]
 archivo = "ej2.txt"
 reservadas = ['FOR', 'IF', 'WHILE']
 vacio = {}
+operadores_reservados = ['(', ')', '*', '+', '-', '/', '^']
 
 def main():
     
@@ -44,6 +45,27 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
         # Se toma la primera cadena en la lista de cadenas.
         cadena_actual = cad_s.pop(0)
 
+        # Sacando una copia de la cadena.
+        cadena_copy = cadena_actual
+
+        # Detectando si la cadena actual es una cadena de texto.
+        if cadena_actual.count('"') == 2:
+
+            for caracter in cadena_actual:
+                if caracter.isalpha():
+                    # Quitar las comillas de la cadena.
+                    cadena_actual = cadena_actual.replace('"', '')
+        
+        else:
+            # Si no es una cadena de texto, se verifica si es una palabra reservada.
+            if cadena_actual in reservadas:
+                # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
+                resultado.append(True)
+            
+            # Si la cadena es diferente a un número, entonces no importa.
+            if cadena_actual.isdigit() == False:
+                pass
+
         #print("Cadena actual: ", cadena_actual)
 
         # Se simula la cadena en cada diccionario en la lista de diccionarios.
@@ -53,6 +75,20 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
             estado_ini = iniciales[i]
             estados_acept = finales[i]
             estado_actual = estado_ini[0]
+
+            # Detectando los operadores.
+            if len(cadena_actual) == 1:
+                if cadena_actual in operadores_reservados:
+
+                    # Verificando que se haya llegado al último diccionario.
+                    if i == len(diccionarios) - 1:
+                        # Si se llegó al último diccionario, se agrega True a la lista de resultados.
+                        valores_cadena.append(True)
+                    
+                    else: 
+                        if i == len(diccionarios) - 1:
+                            # Si se llegó al último diccionario, se agrega el valor a la lista de valores de la cadena actual.
+                            valores_cadena.append(True)
 
             # Se simula la cadena en el diccionario actual.
             for j in range(len(cadena_actual) - 1):
@@ -69,6 +105,17 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
 
                 if j == len(cadena_actual) - 2:
                     valores_cadena.append(v)
+        
+        # Si la copia de la cadena tenía "", entonces analizar su lista de valores_cadena.
+        if cadena_copy.count('"') == 2:
+            print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+
+            # Verificando si hay un true en la lista de valores cadena en la posición 7.
+            if valores_cadena[6] == True:
+                pass
+            else:
+                
+                valores_cadena[7] = False
 
         # Se agrega la lista de valores de la cadena actual al resultado.
         resultado.append(valores_cadena)
@@ -76,7 +123,7 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
         #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
 
         # Verificando si el �ltimo resultado es True.
-        if valores_cadena[-1] == True:
+        if True in valores_cadena:
             pass
         else:
             # Buscando el n�mero de l�nea en donde se encuentra la cadena actual en el archivo.
@@ -211,7 +258,7 @@ def simular_res(diccionarios, iniciales, finales, resultado=[]):
 
                 #print("Estado actual: ", estado_actual)
 
-                v, estado_actual = simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
+                v, estado_actual = simular_cadena2(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
 
                 # if v == False:
                 #     valores_cadena.append(v)
@@ -234,8 +281,89 @@ def simular_res(diccionarios, iniciales, finales, resultado=[]):
         # Se llama recursivamente a la función con las listas actualizadas.
         return simular_res(diccionarios, iniciales, finales, resultado)
 
+def simular_cadena2(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
+        #print("Caracter: ", caracter_actual)
+
+        #print("Estados de aceptación: ", estados_acept)
+
+        transiciones = diccionario[estado_actual]
+
+        #print("Transiciones; ", transiciones)
+
+        #print("Transiciones: ", transiciones)
+
+        if caracter_actual in transiciones:
+            estado_siguiente = transiciones[caracter_actual]
+
+            #print("Estado siguiente: ", estado_siguiente)
+
+            if estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_actual
+
+            if len(estado_siguiente) == 0:
+
+                #print("Falso en caracter actual", estado_siguiente)
+
+                return False, estado_actual
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_actual
+        
+            else:
+
+                #print("Estado: ",estado_actual, estado_actual in estados_acept)
+
+                # Si el estado siguiente es vacío.
+                return True, estado_siguiente
+            
+        elif caracter_siguiente in transiciones:
+
+            # Si no hay transición para el caracter actual, pero sí para el siguiente.
+            estado_siguiente = transiciones[caracter_siguiente]
+
+            if estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_siguiente
+
+            if len(estado_siguiente) == 0:
+                
+                #print("Falso en caracter actual", estado_siguiente)
+
+                # Si el estado siguiente no es vacío.
+                return False, estado_siguiente
+            
+            elif estado_siguiente in estados_acept:
+                #print("Cadena aceptada.")
+                return True, estado_siguiente
+        
+            else:
+                #print("Estado: ", estado_siguiente)
+                #print("Estado: ", estado_siguiente in estados_acept)
+                # Si el estado siguiente es vacío.
+                return True, estado_siguiente
+        
+        elif caracter_actual not in transiciones:
+
+            return False, estado_actual
+            
+        else:
+    
+            #print("Estado actual: ", estado_actual, transiciones)
+
+            if len(transiciones) != 0:
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return True, estado_actual
+            
+            else: 
+            
+                # Si no hay transición para el caracter actual ni para el siguiente.
+                return False, estado_actual
+
 def impresion_res(resultados_res):
     print("Resultado de simular las palabras reservadas: ", resultados_res)
 
 if __name__ == "__main__":
     main()
+
