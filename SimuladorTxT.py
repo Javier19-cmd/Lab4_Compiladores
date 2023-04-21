@@ -555,6 +555,12 @@ def simular_cadenas(cad_s, diccionarios, iniciales, finales, resultado=[]):
             else:
                 
                 valores_cadena[7] = False
+                
+                # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
+                with open(archivo, "r") as archivos:
+                    for i, linea in enumerate(archivos):
+                        if cadena_actual in linea:
+                            print("Sintax error: " + cadena_actual + " line: ", i+1)
 
         # Se agrega la lista de valores de la cadena actual al resultado.
         resultado.append(valores_cadena)
@@ -603,7 +609,7 @@ def simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguien
                 #print("Cadena aceptada.")
                 return True, estado_actual
 
-            if len(estado_siguiente) == 0:
+            if estado_siguiente == vacio:
 
                 #print("Falso en caracter actual", estado_siguiente)
 
@@ -629,7 +635,7 @@ def simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguien
                 #print("Cadena aceptada.")
                 return True, estado_siguiente
 
-            if len(estado_siguiente) == 0:
+            if estado_siguiente == vacio:
                 
                 #print("Falso en caracter actual", estado_siguiente)
 
@@ -740,7 +746,7 @@ def simular_cadena2(diccionario, estado_actual, caracter_actual, caracter_siguie
                 #print("Cadena aceptada.")
                 return True, estado_actual
 
-            if len(estado_siguiente) == 0:
+            if estado_siguiente == vacio:
 
                 #print("Falso en caracter actual", estado_siguiente)
 
@@ -766,7 +772,7 @@ def simular_cadena2(diccionario, estado_actual, caracter_actual, caracter_siguie
                 #print("Cadena aceptada.")
                 return True, estado_siguiente
 
-            if len(estado_siguiente) == 0:
+            if estado_siguiente == vacio:
                 
                 #print("Falso en caracter actual", estado_siguiente)
 
