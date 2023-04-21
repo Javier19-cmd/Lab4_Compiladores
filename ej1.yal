@@ -27,7 +27,7 @@ let digite = ['0'-'9']
 let digitse = digite+
 
 (* Definiendo los números *)
-let hexdigit = ((letterh)(digitse))|((digitse)(letterh))
+let hexdigit = ((letterh)(digitse))|((digitse)(letterh))*
 
 rule gettoken = 
      "+" {return "SUMA"}
