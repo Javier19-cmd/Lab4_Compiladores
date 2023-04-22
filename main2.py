@@ -142,6 +142,14 @@ with open("ej1.yal", "r", encoding='utf-8') as file:
         for elemento in operadores_reservados:
             res_list.remove(elemento)
 
+        # Resto de tokens.
+        tokens = [] # Lista para guardar los tokens.
+        for elemento in res_list:
+            tokens.append(elemento)
+        
+        # Limpiando la lista.
+        res_list.clear()
+
 
     #print(res_list)
 
@@ -417,8 +425,9 @@ with open("ej1.yal", "r", encoding='utf-8') as file:
 
     # Si se quiere ver el árbol, descomentar la línea 227 del SintaxT.
 
+
     # Llamando al simulador del txt.
-    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo, res_list, operadores_reservados)
+    SimuladorTxT(lista_diccionarios, lista_iniciales, lista_finales, archivo, res_list, operadores_reservados, tokens, tabla)
 
 
 # Probando compilar un archivo yalex.

@@ -19,6 +19,8 @@ let sign = ['+'|'-']
 let number = (sign)?digits(,digits)?
 
 (* Definiendo las letras *)
+
+(* Definiendo las letras *)
 let letterh = ['A'-'F']
 let lettersh = letterh+
 
@@ -37,5 +39,8 @@ rule gettoken =
     | "(" {return "PARENTESIS_IZQUIERDO"}
     | ")" {return "PARENTESIS_DERECHO"}
     | "^" {return "POTENCIA"}
+    | digits {return "DÍGITO"}
+    | number {return "NÚMERO CON DECIMAL"}
+    | hexdigit {return "NÚMERO HEXADECIMAL"}
 
 (* La sección de {trailer} es opcional *)

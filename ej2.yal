@@ -29,3 +29,5 @@ rule rule gettoken =
     | "/" {return "DIVISION"}
     | "(" {return "PARENTESIS_IZQUIERDO"}
     | ")" {return "PARENTESIS_DERECHO"}
+    | digits {return "DÍGITO"}
+    | id {return "IDENTIFICADOR"}

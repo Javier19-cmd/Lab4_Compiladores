@@ -30,6 +30,15 @@ let sign = ['+'|'-']
 (* Octavo token: hacer un número *)
 let number = (sign)?digits(,digits)?
 
-rule gettoken = 
+(* La sección de {trailer} es opcional *)
+rule rule gettoken = 
     "IF" {return "IF"}
     | "FOR" {return "FOR"}
+    | "+" {return "SUMA"}
+    | "-" {return "RESTA"}
+    | "*" {return "MULTIPLICACION"}
+    | "/" {return "DIVISION"}
+    | "(" {return "PARENTESIS_IZQUIERDO"}
+    | ")" {return "PARENTESIS_DERECHO"}
+    | digits {return "DÍGITO"}
+    | id {return "IDENTIFICADOR"}
