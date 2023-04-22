@@ -16,7 +16,7 @@ let digits = digit+
 let sign = ['+'|'-']
 
 (* Octavo token: hacer un número *)
-let number = (sign)?digits(,digits)?
+let number = (sign)digits(,digits)
 
 (* Definiendo las letras *)
 

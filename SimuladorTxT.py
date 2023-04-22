@@ -174,7 +174,7 @@ class SimuladorTxT:
                 if len(cadena_actual) == 1:
                     if cadena_actual in self.operadores_reservados: 
 
-                        print("Cadena actual: ", cadena_actual)
+                        #print("Cadena actual: ", cadena_actual)
                         #valores_cadena.append(True)
 
                         # Verificando que se haya llegado al último diccionario.
@@ -198,6 +198,12 @@ class SimuladorTxT:
 
                     v, estado_actual = self.simular_cadena(diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept)
 
+                    # Si hay un estado igual a {}, entonces regresarlo al inicial.
+                    if estado_actual == {}:
+                        estado_actual = estado_ini[0]
+                        
+
+
                     #print("Estado actual: ", estado_actual)
 
                     # if v == False:
@@ -214,7 +220,7 @@ class SimuladorTxT:
             
             # Si la copia de la cadena tenía "", entonces analizar su lista de valores_cadena.
             #if self.cadena_copy.count('"') == 2:
-            print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+            #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
 
             # # Verificando si hay un true en la lista de valores cadena en la posición 7.
             # if valores_cadena[6] == True:
@@ -255,70 +261,79 @@ class SimuladorTxT:
             return self.simular_cadenas(diccionarios, iniciales, finales, resultado)
     
     def simular_res(self):
+        # Imprime las variables de seguimiento definidas en la clase.
+        # print("Tokens: ", self.tokens)
+        # print("Operadores reservados: ", self.operadores_reservados)
+        # print("Reservadas: ", self.reservadas)
+        # print("Diccionario cadenas: ", self.diccionario_cadenas)
         
-        print("Tokens: ", self.tokens)
-        print("Operadores reservados: ", self.operadores_reservados)
-        print("Reservadas: ", self.reservadas)
-        #print("Resultado: ", resultado)
-        
-        #print("Lista: ", self.lista)
-
-        print("Diccionario cadenas: ", self.diccionario_cadenas)
-
         # Variables de seguimiento.
         ultima_vez_operador = False
         ultima_vez_reservada = False
         ultima_vez_token = {}
 
+        diccionario = {}
+
         for clave in self.tokens:
             ultima_vez_token[clave] = False
-
-        # Recorriendo las listas de los diccionarios.
+            
+        # Recorre los diccionarios y listas definidos en la clase.
         for clave in self.diccionario_cadenas:
             lista = self.diccionario_cadenas[clave]
 
-            # Detectando los operadores.
+            # Detecta los operadores.
             if len(lista) == 1: 
                 if lista[0] == True:
                     print("Operador detectado", clave)
                 elif lista[0] == False:
-                    # Abirendo el archivo para buscar el caracter.
+                    # Abre el archivo para buscar el caracter.
                     with open(self.archivo, "r") as archivos:
                         for i, linea in enumerate(archivos):
                             if clave in linea:
                                 print("Sintax error: " + clave + " line: ", i+1)
 
             for i, valor in enumerate(lista):
-                #pass
-                #print("Valor: ", valor, i)
 
+                # Busca el token en la tabla de símbolos definida en la clase.
                 for s, (key, value) in enumerate(self.tabla.items()):
                     if valor == True:
-                        # Imprimiendo la llave que corresponde al valor de la tabla.
-                        #print("Token: ", key, clave, i)
-
-                        #print("i: ", i, "s: ", s)
-
-                        # Imprimir nada más la llave de la tabla que corresponde al i.
+                        # Imprime la llave que corresponde al valor de la tabla.
                         if i == s:
-                            #print("Token: ", key, clave)
-                            
-                            # En el caso de los tokens encontrados, imprimir nada más el último que se encontró de cada uno.
+                            # En el caso de los tokens encontrados, imprime el último que se encontró de cada uno.
                             if key in self.tokens:
-
                                 if clave in self.reservadas:
                                     # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
-                                    print("Palabra reservada", clave)
-                                    ultima_vez_operador = False
-                                    ultima_vez_reservada = True
-                                    ultima_vez_token[key] = False
-                                
+                                    if not ultima_vez_reservada:
+                                        print("Palabra reservada", clave)
+                                        ultima_vez_operador = False
+                                        ultima_vez_reservada = True
+                                        ultima_vez_token[key] = False
+
+                                elif key in self.operadores_reservados:
+                                    # Si la cadena actual es un operador reservado, se agrega a la lista de resultados.
+                                    if not ultima_vez_operador:
+                                        print("Operador reservado", clave)
+                                        ultima_vez_operador = True
+                                        ultima_vez_reservada = False
+                                        ultima_vez_token[key] = False
+
                                 else:
+                                    
                                     ultima_vez_operador = False
                                     ultima_vez_reservada = False
                                     ultima_vez_token[key] = True
 
-                                    print("Token ", clave, " es ", key)
+                                    #print("Token ", clave, " es ", key)
+
+                                    diccionario[clave] = key
+        
+        # Imprime los tokens encontrados.
+        #print("Tokens encontrados: ", diccionario)
+
+        # Imprimiendo el diccionario llave por llave.
+        for keys, value in diccionario.items():
+            print("Token: ", keys, "type: ", value)
+
 
     def simular_cadena(self, diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
 
