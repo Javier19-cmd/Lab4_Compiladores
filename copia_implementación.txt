@@ -12,6 +12,7 @@ operadores_reservados = ['(', ')', '*', '+', '-', '/']
 tokens = ['digits', 'id', 'number', 'IF', 'string']
 tabla = {'delim': '( |\t|\n)', 'ws': '( |\t|\n)( |\t|\n)*', 'letter': '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)', 'digit': '(0|1|2|3|4|5|6|7|8|9)', 'digits': '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*', 'sign': '(+|-)', 'number': '((+|-))(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*(,(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)', 'endline': '(xyz)', 'id': '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)*(xyz)(xyz)*', 'string': '"(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)|( )(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)|( )*"'}
 diccionario_cadenas = {}
+vacio2 = {}
 
 def main():
     
@@ -116,7 +117,7 @@ def simular_cadenas(diccionarios, cad_s, iniciales, finales, resultado=[]):
                 #print("v: ", v, "estado_actual: ", estado_actual)
                 #print(valores_cadena)
 
-                # Si hay un estado igual a {}, entonces regresarlo al inicial.
+                # Si hay un estado igual a vacío, entonces regresarlo al inicial.
                 if estado_actual == vacio:
                     estado_actual = estado_ini[0]
                 
@@ -321,7 +322,13 @@ def simular_res(): # Simulando otras cosas.
 
     print("Diccionario: ", diccionario)    
     
-    new_dict =  {k: v for k, v in diccionario.items() if not isinstance(v, bool)}
+    new_dict =  vacio2
+
+    for k, v in diccionario.items():
+        if not isinstance(v, bool):
+            new_dict[k] = v
+    
+    print("Diccionario: ", new_dict)
     
     # Imprimiendo los tokens encontrados.
     for keys, value in new_dict.items():

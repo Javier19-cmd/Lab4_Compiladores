@@ -12,7 +12,7 @@ diccionario_cadenas = {}
 vacio2 = {}
     
 def main():
-        
+    
     # Juntando la lista de reservadas, operadores_reservados y tokens.
     lista = []
     lista.extend(reservadas)
@@ -317,16 +317,15 @@ def simular_res(): # Simulando otras cosas.
 
                                 diccionario[clave] = key
 
+    print("Diccionario: ", diccionario)    
     
-    new_dict = vacio2
-
-    print("New dict", new_dict)
+    new_dict =  vacio2
 
     for k, v in diccionario.items():
         if not isinstance(v, bool):
             new_dict[k] = v
     
-    print("Diccionario: ", new_dict)    
+    print("Diccionario: ", new_dict)
     
     # Imprimiendo los tokens encontrados.
     for keys, value in new_dict.items():
