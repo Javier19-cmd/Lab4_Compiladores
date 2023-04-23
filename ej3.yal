@@ -15,23 +15,23 @@ let digit = ['0'-'9']
 (* Tercer token: hacer un digito *)
 let digits = digit+
 
-(* Cuarto token: espacios en blanco*)
-let space = (_)+
-
-(* Quinto token: caracter final *)
-let endline = ['xyz']
-
-(* Sexto token: hacer un identificador *)
-let id = (letter|digits|space)*endline
-
 (* Séptimo token: hacer los signos *)
 let sign = ['+'|'-']
 
 (* Octavo token: hacer un número *)
-let number = (sign)?digits(,digits)?
+let number = (sign)digits(,digits)
+
+(* Quinto token: caracter final *)
+let endline = [xyz]
+
+(* Sexto token: hacer un identificador *)
+let id = letter(letter|digits)*endline
+
+(* El token que detecta las cadenas de caracteres (esta puede estar compuesta por letras, números o espacios en blanco) *)
+let string = "(letter|digito| )+"
 
 (* La sección de {trailer} es opcional *)
-rule rule gettoken = 
+rule rule gettoken =
     "IF" {return "IF"}
     | "FOR" {return "FOR"}
     | "+" {return "SUMA"}
@@ -41,4 +41,6 @@ rule rule gettoken =
     | "(" {return "PARENTESIS_IZQUIERDO"}
     | ")" {return "PARENTESIS_DERECHO"}
     | digits {return "DÍGITO"}
+    | number {return "NÚMERO CON DECIMAL"}
     | id {return "IDENTIFICADOR"}
+    | string {return "STRING"}

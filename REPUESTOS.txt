@@ -208,3 +208,58 @@ def grafo(automata, lista, diccionario):
 
         #     # Se llama recursivamente a la función con las listas actualizadas.
         #     return self.simular_res(diccionarios, iniciales, finales, resultado)
+-------------------------------------------------------------------------------------------------------------------
+           # Si la copia de la cadena tenía "", entonces analizar su lista de valores_cadena.
+            #if self.cadena_copy.count('"') == 2:
+            #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+
+            # if valores_cadena[5] == True:
+            #     pass
+            # else:
+            #     valores_cadena[6] = False
+
+            #     # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
+            #     with open(self.archivo, "r") as archivos:
+            #         for i, linea in enumerate(archivos):
+            #             if cadena_actual in linea:
+            #                 print("Sintax error: " + cadena_actual + " line: ", i+1)
+
+            # # Verificando si hay un true en la lista de valores cadena en la posición 7.
+            # if valores_cadena[6] == True:
+            #     pass
+            # else:
+                
+            #     valores_cadena[7] = False
+
+            #     # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
+            #     with open(self.archivo, "r") as archivos:
+            #         for i, linea in enumerate(archivos):
+            #             if cadena_actual in linea:
+            #                 print("Sintax error: " + cadena_actual + " line: ", i+1)
+
+-----------------------------------------------------------------------------------------------------
+            # if cadena_actual.count('"') == 2: # Detectando si la cadena actual es una cadena de texto.
+                
+            #     for caracter in cadena_actual:
+            #         if caracter.isalpha():
+            #             #print("Caracter")
+            #             # Quitar las comillas de la cadena.
+            #             cadena_actual = cadena_actual.replace('"', '')
+                
+            # else: 
+            #     # Si no es una cadena de texto, se verifica si es una palabra reservada.
+            #     if cadena_actual in self.reservadas:
+            #         # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
+            #         print("Palabra reservada", cadena_actual)
+            #         resultado.append(True)
+                
+            #     # Si la cadena es diferente a un número, entonces no importa.
+            #     if cadena_actual.isdigit() == False:
+            #         pass
+
+            # # Detectando los operadores.
+            # if len(cadena_actual) == 1: # Detectando primero su longitud.
+            #     if cadena_actual in self.operadores_reservados: # Detectando si es un operador.
+            #         print("Operador detectado")
+
+            #print("Cadena actual: ", cadena_actual)

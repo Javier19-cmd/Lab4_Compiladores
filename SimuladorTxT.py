@@ -134,7 +134,15 @@ class SimuladorTxT:
 
             #print("Cadena actual: ", cadena_actual)
 
+            # Si la cadena empieza y termina con comillas dobes, es porque es una cadena entera la que se debe simular.
+            if cadena_actual[0] == '"' and cadena_actual[-1] == '"':
+                #print("Cadena: ", cadena_actual)
 
+                # Si la cadena empieza y termina con comiilas, entonces se simula todo de un solo, sin dividirlo.
+                # Se quitan las comillas.
+                cadena_actual = cadena_actual.replace('"', '')
+
+                #print("Cadena actual: ", cadena_actual)
 
             # if cadena_actual.count('"') == 2: # Detectando si la cadena actual es una cadena de texto.
                 
@@ -202,39 +210,59 @@ class SimuladorTxT:
                     if estado_actual == {}:
                         estado_actual = estado_ini[0]
                         
-
-
-                    #print("Estado actual: ", estado_actual)
-
-                    # if v == False:
-                    #     valores_cadena.append(v)
-                    #     break
-
                     if j == len(cadena_actual) - 2:
                         valores_cadena.append(v)
 
-            # Guardando la cadena y sus resultados en un diccionario.
-            self.diccionario_cadenas[cadena_actual] = valores_cadena     
-
-
+                        
             
-            # Si la copia de la cadena tenía "", entonces analizar su lista de valores_cadena.
-            #if self.cadena_copy.count('"') == 2:
-            #print("Cadena: ", cadena_actual, "resultados: ", valores_cadena)
+            # Verificando si en la tabla está la definición de string.
+            if 'string' in self.tabla:
+                # Imprimiendo el último valor de valores_cadena.
+                #print("Valores cadena: ", valores_cadena[-1])
 
-            # # Verificando si hay un true en la lista de valores cadena en la posición 7.
-            # if valores_cadena[6] == True:
-            #     pass
-            # else:
-                
-            #     valores_cadena[7] = False
+                # Si la cadena_actual tenía " al prinicipo o al final, entonces es string.
+                if self.cadena_copy.startswith('"') or self.cadena_copy.endswith('"'):
+                    valores_cadena[-1] = True
+                else: 
+                    valores_cadena[-1] = False
+            
+            # Verificando si hay un endline en la tabla.
+            if 'endline' in self.tabla:
+                # Obteniendo el valor del endline.
+                endline = self.tabla['endline']
 
-            #     # Buscando el número de línea en donde se encuentra la cadena actual en el archivo.
-            #     with open(self.archivo, "r") as archivos:
-            #         for i, linea in enumerate(archivos):
-            #             if cadena_actual in linea:
-            #                 print("Sintax error: " + cadena_actual + " line: ", i+1)
+                #print("Endline: ", endline)
                 
+                # Quitándole los paréntesis al endline.
+                endline = endline.replace('(', '')
+                endline = endline.replace(')', '')
+
+                # Imprimiendo los resultados.
+                #print("Valores cadena: ", valores_cadena)
+
+                # 8 y 9.
+                if valores_cadena[8] == True and valores_cadena[9] == True:
+                    pass
+                elif valores_cadena[8] == False and valores_cadena[8] == False:
+                    pass
+                elif valores_cadena[7] == False and valores_cadena[8] == True: 
+                    
+                    if cadena_actual in self.reservadas:
+                        pass
+                    else:
+
+                        # Volviendo falso todos los valores de la cadena actual.
+                        for i in range(len(valores_cadena)):
+                            valores_cadena[i] = False
+
+                        # with open(self.archivo, "r") as arc:
+                        #     for i, linea in enumerate(arc):
+                        #         if cadena_actual in linea:
+                        #             print("Sintax error: " + cadena_actual + " line: ", i+1)
+
+            # Guardando la cadena y sus resultados en un diccionario.
+            self.diccionario_cadenas[cadena_actual] = valores_cadena
+    
 
             # Se agrega la lista de valores de la cadena actual al resultado.
             resultado.append(valores_cadena)
@@ -303,11 +331,10 @@ class SimuladorTxT:
                             if key in self.tokens:
                                 if clave in self.reservadas:
                                     # Si la cadena actual es una palabra reservada, se agrega a la lista de resultados.
-                                    if not ultima_vez_reservada:
-                                        print("Palabra reservada", clave)
-                                        ultima_vez_operador = False
-                                        ultima_vez_reservada = True
-                                        ultima_vez_token[key] = False
+                                    print("Palabra reservada", clave)
+                                    ultima_vez_operador = False
+                                    ultima_vez_reservada = True
+                                    ultima_vez_token[key] = False
 
                                 elif key in self.operadores_reservados:
                                     # Si la cadena actual es un operador reservado, se agrega a la lista de resultados.

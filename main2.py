@@ -8,14 +8,14 @@ import re
 from SimuladorTxT import *
 
 tabla = {} # Tabla para guardar las declaraciones con let.
-archivo = "ej1.txt"
+archivo = "ej3.txt"
 
 tabla_res = {} # Tabla para guardar las palabras reservadas.
 
 res_list = [] #Lista para guardar las palabras reservadas.
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("ej1.yal", "r", encoding='utf-8') as file:
+with open("ej3.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -275,6 +275,17 @@ with open("ej1.yal", "r", encoding='utf-8') as file:
 
         tabla['hexdigit'] = tabla['hexdigit'].replace("letterh", new_letters_h)
         tabla['hexdigit'] = tabla['hexdigit'].replace("digitse", new_digits_e)
+    
+    # Buscando los strings.
+    if 'string' in tabla:
+        new_letter = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)"
+        new_digit = "(0|1|2|3|4|5|6|7|8|9)"
+        new_space = "(_)"
+
+        # Uniendo las cosas para hacer la cerradura positiva.
+        new_all = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)|( )(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)|( )*"
+
+        tabla['string'] = tabla['string'].replace("(letter|digito| )+", new_all)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
