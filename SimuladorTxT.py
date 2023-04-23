@@ -21,6 +21,8 @@ class SimuladorTxT:
         
         self.diccionario_cadenas = {} # Diccionario para las cadenas.
 
+        self.cadena_strings = [] # Lista para guardar los strings sin comas.
+
         self.reservadas = ["IF", "FOR", "WHILE", "ELSE"]
 
         # Quitando las palabras reservadas de los tokens.
@@ -220,6 +222,10 @@ class SimuladorTxT:
                 
                 # Si la cadena actual tenía " al principio y al final, entonces es string.
                 if self.cadena_copy[0] == '"' and self.cadena_copy[-1] == '"':
+                    
+                    #print("Copia: ", self.cadena_copy)
+                    self.cadena_strings.append(self.cadena_copy)
+
                     valores_cadena[-1] = True
                 else:
                     valores_cadena[-1] = False
@@ -333,9 +339,9 @@ class SimuladorTxT:
 
                                     diccionario[clave] = key
 
-        print("Diccionario: ", diccionario)    
+        #print("Diccionario: ", diccionario)    
         
-        #print("Diccionario cadenas: ", self.diccionario_cadenas)
+            #print("Cadena strings: ", self.cadena_strings)
 
         new_dict =  {}
 
@@ -343,17 +349,60 @@ class SimuladorTxT:
             if not isinstance(v, bool):
                 new_dict[k] = v
         
-        #print("Diccionario: ", new_dict)
-        
         # Imprimiendo los tokens encontrados.
         for keys, value in new_dict.items():
 
 
             if value == "string":
-                print("Token: \"" + keys + "\" type: " + value)
+                
+                #print("S: ", self.cadena_strings)
+
+                string2 = self.cadena_strings.pop()
+
+                comillas = 0
+                palabra = ''
+                for c in string2:
+                    if c == '"':
+                        comillas += 1
+                        if comillas == 2:
+                            print('"' + palabra.strip() + '"' + " type: " + value)
+                            palabra = ''
+                            comillas = 0
+                    else:
+                        palabra += c
+                if palabra:
+                    print('"' + palabra.strip() + '"')
+
+                #print("Token: \"" + keys + "\" type: " + value)
             else: 
                 print("Token: " + keys + " type: " + value)
+        
+        #print("New_dict: ", new_dict)
+
+        # if len(self.cadena_strings) > 0:
+
+        #     print("Copia: ", self.cadena_strings)
+
+        #     # Sacar antes una copia de lo que hay adentro.
+        #     cadena_stringss = self.cadena_strings.copy()
+
+        #     self.cadena_strings = [x.strip('"') for x in self.cadena_strings]
+        #     result = ', '.join(self.cadena_strings).split('" ')
+        #     print(cadena_stringss)
+        #     print(result)
+
+        #     print(result.pop())
+
+        #strs = []
+
+        # keys_to_modify = [key for key, value in new_dict.items() if value == 'string']
+
+        # # Iterar sobre la lista de claves para modificar el diccionario
+        # for key in keys_to_modify:
+        #     new_dict['"' + key + '"'] = new_dict.pop(key)
             
+        # print(new_dict)
+
             # Imprime los tokens encontrados.
             #print("Tokens encontrados: ", diccionario)
 
@@ -366,24 +415,6 @@ class SimuladorTxT:
             #         print("Token: \"" + keys + "\" type: " + value)
             #     else:
             #         print("Token: " + keys + " type: " + value)
-    
-    def split_quotes(self): # Poner ,.
-        res = []
-        in_quotes = False
-        for s in self.cads:
-            if '"' in s:
-                if not in_quotes:
-                    in_quotes = True
-                    current_str = s.strip('"')
-                else:
-                    in_quotes = False
-                    current_str += f' "{s.strip()}"'
-                    res.append(current_str)
-            elif in_quotes:
-                current_str += f' {s}'
-            else:
-                res.append(s)
-        return res
 
     def simular_cadena(self, diccionario, estado_actual, caracter_actual, caracter_siguiente, estados_acept):
 
@@ -483,6 +514,7 @@ class SimuladorTxT:
         vacio = {}
         diccionario_cadenas = {}
         vacio2 = {}
+        cadena_strings = []
     
 
         datas = f"""
@@ -497,6 +529,7 @@ tokens = {'{}'}
 tabla = {'{}'}
 diccionario_cadenas = {'{}'}
 vacio2 = {'{}'}
+cadena_strings = {'{}'}
     
 def main():
     
@@ -613,6 +646,9 @@ def simular_cadenas(diccionarios, cad_s, iniciales, finales, resultado=[]):
             
             # Si la cadena actual tenía " al principio y al final, entonces es string.
             if cadena_copy[0] == '"' and cadena_copy[-1] == '"':
+                
+                cadena_strings.append(cadena_copy)
+
                 valores_cadena[-1] = True
             else:
                 valores_cadena[-1] = False
@@ -819,7 +855,24 @@ def simular_res(): # Simulando otras cosas.
 
 
         if value == "string":
-            print("Token: \"" + keys + "\" type: " + value)
+            #print("Token: "" + keys + "" type: " + value)
+
+            string2 = cadena_strings.pop()
+
+            comillas = 0
+            palabra = ''
+            for c in string2:
+                if c == '"':
+                    comillas += 1
+                    if comillas == 2:
+                        print('"' + palabra.strip() + '"' + " type: " + value)
+                        palabra = ''
+                        comillas = 0
+                else:
+                    palabra += c
+            if palabra:
+                print('"' + palabra.strip() + '"')
+
         else: 
             print("Token: " + keys + " type: " + value)
                 
@@ -827,7 +880,7 @@ def simular_res(): # Simulando otras cosas.
 if __name__ == "__main__":
     main()
 
-""".format(diccionarios, iniciales, finales, str('"{}"'.format(archivo)), reservadas, vacio, operadores_reservados, tokens, tabla, diccionario_cadenas, vacio2)
+""".format(diccionarios, iniciales, finales, str('"{}"'.format(archivo)), reservadas, vacio, operadores_reservados, tokens, tabla, diccionario_cadenas, vacio2, cadena_strings)
         
         with open(nombre, 'w', encoding='utf-8') as f:
             f.write(datas)
